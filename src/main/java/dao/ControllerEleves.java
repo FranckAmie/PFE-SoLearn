@@ -121,6 +121,12 @@ public class ControllerEleves {
 		return cours.findAll();
 	}
 	
+	@RequestMapping("/coursParId")
+	public Cours monCours(long id){
+		return cours.findOne(id);
+	}
+	
+	
 	//Add a course
 	@RequestMapping("/addCours")
 	public Cours addCours(Cours c){
@@ -198,4 +204,67 @@ public class ControllerEleves {
 	
 	/*** FIN PARTIE DES UTILISATEURS  ****/
 	
+	
+	
+	
+	
+	/*** DEBUT PARTIE DES Questions  ****/
+	
+	@Autowired
+	IQuestionRepository question;
+	
+	
+	@RequestMapping("allQuestions")
+	public List<Questions> allQuestions(){
+		return question.findAll();
+	}
+	
+	@RequestMapping("addQuestion")
+	public Questions addQuestion(Questions q){
+		question.saveAndFlush(q);
+		return q;
+	}
+	
+	@RequestMapping("questionParTag")
+	public List<Questions> questionTag(String tag){
+		return question.questionParTag(tag);
+	}
+	
+	@RequestMapping("questionParUser")
+	public List<Questions> questionUser(long id_user){
+		return question.questionParUser(id_user);
+	}
+	
+	@RequestMapping("ouvrirQuestion")
+	public Questions ouvrirQuestion(long id_question){
+		return question.findOne(id_question);
+	}
+	
+	
+	/*** FIN PARTIE DES Questions  ****/
+	
+	
+	
+	/*** DEBUT COMMENTAIRES QUESTIONS  ****/
+	@Autowired
+	ICommentaires_Questions cq;
+	
+	@RequestMapping("commentairesQuestion")
+	public List<Commentaires_Questions> listeCommentairesQuestion(long id_question){
+		return cq.commentaire_question(id_question);
+	}
+	
+	@RequestMapping("addCommentaireQuestion")
+	public Commentaires_Questions addCommentaireQuestion(Commentaires_Questions c){
+		cq.saveAndFlush(c);
+		return c;
+	}
+	
+	@RequestMapping("delCommentaireQuestion")
+	public void delCommentaireQuestion(long id){
+		cq.delete(id);;
+		
+	}
+	
+	/*** DEBUT COMMENTAIRES QUESTIONS  ****/
 }
